@@ -5,27 +5,107 @@
 @using Blazor.Extensions.Canvas.Canvas2D
 @using BlazorInputFile
 
-<BlazorInputFile.InputFile OnChange="OnChange"/>
-<div>
+
+<div class="instrument_panel">
+    <button style="background-color: white;" @onclick="OnPlusClick">
+        <img src="/plus.png"/>
+    </button>
+    <button style="background-color: white;" @onclick="OnMinusClick">
+        <img src="/minus.png"/>
+    </button>
+    <button style="background-color: white;">
+        <img src="/ok.png"/>
+    </button>
+    <button style="background-color: white;" @onclick="OnCancelClick">
+        <img src="/cancel.png"/>
+    </button>
+
+    <select class="color_pick" @bind="curent_rect_color">
+        <option value="Black">Black</option>
+        <option value="Red">Red</option>
+        <option value="Green">Green</option>
+        <option value="Blue">Blue</option>
+        <option value="Yellow">Yellow</option>
+        <option value="White">White</option>
+        <option value="Orange">Orange</option>
+        <option value="Purple">Purple</option>
+    </select>
+</div>
+
+<div @onmouseup="OnMouseUp" @onmousedown="OnMouseDown">
     <BECanvas Width="1100" Height="700" @ref="canvas"/>
 </div>
+<BlazorInputFile.InputFile OnChange="OnChange"/>
 <img hidden src="@imageDataUri" @ref="img"/>
 
-
+<h3>@text</h3>
 
 @code {
     private ElementReference img;
     protected BECanvasComponent canvas;
     private Canvas2DContext context;
-    private string imageDataUri, status;
+    private string imageDataUri, status, text, curent_rect_color = "Black";
+    private double startX, endX, startY, endY;
+    private List<Rect> rects = new List<Rect>();
+    private bool changed = true, can_add = false;
+
+
+    private void OnMinusClick()
+    {
+        if (rects.Count != 0) { 
+            rects.RemoveAt(rects.Count - 1); 
+        }
+    }
+    private void OnPlusClick()
+    {
+        can_add = true;
+    }
+    private async void OnCancelClick()
+    {
+        
+        rects.Clear();
+        imageDataUri = string.Empty;
+        can_add = false;
+        curent_rect_color = "Black";
+        await context.ClearRectAsync(0, 0, 1100, 700);
+    }
+    private void OnMouseUp(MouseEventArgs e)
+    {
+        if (can_add)
+        {
+            endX = e.OffsetX;
+            endY = e.OffsetY;
+            rects.Add(new Rect() { x = startX, y = startY, width = endX - startX, height = endY - startY, color = curent_rect_color });
+            can_add = false;
+        }
+    }
+    private void OnMouseDown(MouseEventArgs e)
+    {
+        if (can_add)
+        {
+            startX = e.OffsetX;
+            startY = e.OffsetY;
+        }
+    }
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         if (firstRender)
         {
             context = await canvas.CreateCanvas2DAsync();
         }
+        await context.ClearRectAsync(0, 0, 1100, 700);
         await context.DrawImageAsync(img, 0, 0);
+        try{
+            foreach (Rect rc in rects)
+            {
+                await context.SetLineWidthAsync(2.0f);
+                await context.SetStrokeStyleAsync(rc.color);
+                await context.StrokeRectAsync(rc.x, rc.y, rc.width, rc.height);
+            }
+        }
+        catch(Exception ex){}
     }
+    
     async Task OnChange(IFileListEntry[] files)
     {
         var rawFile = files.FirstOrDefault();
@@ -36,8 +116,9 @@
             var ms = new MemoryStream();
             await imageFile.Data.CopyToAsync(ms);
             imageDataUri = $"data:{format};base64,{Convert.ToBase64String(ms.ToArray())}";
-
             status = $"Finished loading {ms.Length} bytes from {imageFile.Name}";
         }
+        rects.Clear();
+        changed = true;
     }
 }

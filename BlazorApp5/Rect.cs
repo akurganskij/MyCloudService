@@ -6,5 +6,6 @@
         public double y;
         public double width;
         public double height;
+        public string color;
     }
 }

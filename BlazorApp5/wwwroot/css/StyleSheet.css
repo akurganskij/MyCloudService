@@ -1,0 +1,9 @@
+﻿.instrument_panel{
+    display: table;
+    background-color: lightgray;
+    margin: 5px, 5px, 5px, 5px;
+    width: inherit;
+}
+.color_pick{
+    align-items: end;
+}
