@@ -1,7 +1,17 @@
 ﻿@page "/tasks"
-
-<h3>TaskView</h3>
+@inject HttpClient HttpClient
+@inject NavigationManager NavigationManager
+<h3>@text</h3>
 
 @code {
+    private string text;
+    private List<Image> images;
+    private List<Tasks> tasks;
 
+    protected override async Task OnInitializedAsync()
+    {
+        images = await HttpClient.GetFromJsonAsync<List<Image>>(NavigationManager.BaseUri + "cloud");
+        text = images[1].Name;
+        //tasks = await HttpClient.GetFromJsonAsync<
+    }
 }
