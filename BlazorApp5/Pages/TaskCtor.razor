@@ -5,6 +5,8 @@
 @using Blazor.Extensions.Canvas.Canvas2D
 @using BlazorInputFile
 
+@inject DBContext DbContext
+
 
 <div class="instrument_panel">
     <button style="background-color: white;" @onclick="OnPlusClick">
@@ -13,7 +15,7 @@
     <button style="background-color: white;" @onclick="OnMinusClick">
         <img src="/minus.png"/>
     </button>
-    <button style="background-color: white;">
+    <button style="background-color: white;" @onclick="OnOkClick">
         <img src="/ok.png"/>
 
     </button>
@@ -49,6 +51,7 @@
     private double startX, endX, startY, endY;
     private List<Rect> rects = new List<Rect>();
     private bool changed = true, can_add = false;
+    private List<Tasks> tasks = new List<Tasks>();
 
 
     private void OnMinusClick()
@@ -61,13 +64,29 @@
     {
         can_add = true;
     }
+    private void OnOkClick()
+    {
+        int idIm = DbContext.images.Count();
+        Image im = new Image()
+            {
+                Id = idIm + 1,
+                Name = "Image",
+                Description = imageDataUri,
+            };
+        DbContext.images.Add(im);
+        foreach (Tasks task in tasks) task.ImageId = im.Id;
+        DbContext.tasks.AddRange(tasks);
+        DbContext.SaveChanges();
+
+    }
     private async void OnCancelClick()
     {
-        
+
         rects.Clear();
         imageDataUri = string.Empty;
         can_add = false;
         curent_rect_color = "Black";
+        tasks.Clear();
         await context.ClearRectAsync(0, 0, 1100, 700);
     }
     private void OnMouseUp(MouseEventArgs e)
@@ -78,6 +97,15 @@
             endY = e.OffsetY;
             rects.Add(new Rect() { x = startX, y = startY, width = endX - startX, height = endY - startY, color = curent_rect_color });
             can_add = false;
+            Tasks ts = new Tasks()
+            {
+                x1 = startX,
+                x2 = endX,
+                y1 = startY,
+                y2 = endY,
+                question = "njkfjsj"
+            };
+            tasks.Add(ts);
         }
     }
     private void OnMouseDown(MouseEventArgs e)
@@ -105,6 +133,8 @@
             }
         }
         catch(Exception ex){}
+
+         
     }
     
     async Task OnChange(IFileListEntry[] files)

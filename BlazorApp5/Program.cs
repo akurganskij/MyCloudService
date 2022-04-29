@@ -1,5 +1,6 @@
 using BlazorApp5.Data;
 using BlazorApp5;
+using BlazorApp5.Models;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 
@@ -10,9 +11,11 @@ builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 builder.Services.AddSingleton<WeatherForecastService>();
 
+builder.Services.AddScoped<IImageRepository, ImageRepository>();
+builder.Services.AddScoped<ITaskRepository, TaskRepository>();
 
 builder.Services.AddHttpClient();
-builder.Services.AddSqlite<DBContext>("Data Source=cloud.db");
+builder.Services.AddSqlite<DBContext>("Data Source=image.db");
 
 var app = builder.Build();
 
@@ -23,6 +26,7 @@ if (!app.Environment.IsDevelopment())
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
+
 
 app.UseHttpsRedirection();
 

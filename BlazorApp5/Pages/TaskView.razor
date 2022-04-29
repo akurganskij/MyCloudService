@@ -1,17 +1,33 @@
-﻿@page "/tasks"
+﻿@page "/taskView"
 @inject HttpClient HttpClient
 @inject NavigationManager NavigationManager
+@inject DBContext DbContext
 <h3>@text</h3>
+
+<table>
+    <tr>
+        <th>ProblemId</th>
+        <th>Name</th>
+    </tr>
+    @if(images.Count != 0)
+    @foreach(Image im in images)
+    {
+        <tr>
+            <td>@im.Id</td>
+            <td><a href="/task/@im.Id">@im.Name</a></td>
+        </tr>
+    }
+</table>
 
 @code {
     private string text;
     private List<Image> images;
     private List<Tasks> tasks;
 
-    protected override async Task OnInitializedAsync()
+    protected override void OnInitialized()
     {
-        images = await HttpClient.GetFromJsonAsync<List<Image>>(NavigationManager.BaseUri + "cloud");
-        text = images[1].Name;
-        //tasks = await HttpClient.GetFromJsonAsync<
+        images = DbContext.images.ToList();
+        base.OnInitialized();
     }
+
 }

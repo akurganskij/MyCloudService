@@ -1,0 +1,20 @@
+﻿@page "/task/{ImageId:int}"
+@inject DBContext DbContext
+<h3>@image.Name</h3>
+<h3>@tasks.Count</h3>
+<div>
+    <img src="@image.Description"/>
+</div>
+@code {
+    [Parameter]
+    public int? ImageId { get; set; }
+
+    private Image image;
+    private List<Tasks> tasks;
+
+    protected override void OnInitialized()
+    {
+        image = DbContext.images.Find(ImageId);
+        tasks = DbContext.tasks.Where(i => i.ImageId == ImageId).ToList();
+    }
+}

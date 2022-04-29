@@ -9,23 +9,22 @@ public class Image
 
 }
 
+
 public class Tasks
 {
     public int Id { get; set; }
 
-    public int TaskNum { get; set; }
-
-    public int x1 { get; set; }
-    public int y1 { get; set; }
-    public int x2 { get; set; }
-    public int y2 { get; set; }
+    public double x1 { get; set; }
+    public double y1 { get; set; }
+    public double x2 { get; set; }
+    public double y2 { get; set; }
 
     public string question { get; set; }
-    public string answer { get; set; }
 
     public int ImageId { get; set; }
     public Image Image { get; set; }
 }
+
 /*
 public class Problems
 {
