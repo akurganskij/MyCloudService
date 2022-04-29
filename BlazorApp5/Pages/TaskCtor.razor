@@ -41,7 +41,7 @@
 <BlazorInputFile.InputFile OnChange="OnChange"/>
 <img hidden src="@imageDataUri" @ref="img"/>
 
-<h3>@text</h3>
+<ModalPageConfirm Title="Confirm page" Text="Are you sure, you want to delete all the data you have made?" />
 
 @code {
     private ElementReference img;
