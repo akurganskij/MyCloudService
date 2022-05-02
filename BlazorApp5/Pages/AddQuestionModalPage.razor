@@ -9,8 +9,7 @@
                 <input @bind="Question"/>
             </div>
             <div class="modal-footer">
-                <button @onclick="OnNo">No</button>
-                <button @onclick="OnYes">Yes</button>
+                <button @onclick="OnOk">Ok</button>
             </div>
         </div>
     </div>
@@ -24,11 +23,9 @@
     public string Text { get; set; }
 
     [Parameter]
-    public EventCallback OnYes { get; set; }
+    public EventCallback OnOk { get; set; }
+
 
     [Parameter]
-    public EventCallback OnNo { get; set; }
-
-    [Parameter]
-    public string Question { get; set }
+    public string Question { get; set; }
 }
