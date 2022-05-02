@@ -41,7 +41,20 @@
 <BlazorInputFile.InputFile OnChange="OnChange"/>
 <img hidden src="@imageDataUri" @ref="img"/>
 
-<ModalPageConfirm Title="Confirm page" Text="Are you sure, you want to delete all the data you have made?" />
+@if (onCancelConfirm)
+{
+    <ModalPageConfirm Title="Confirm page" Text="Are you sure, you want to delete all the data you have made?" OnYes="@OnCancelYes" OnNo="@OnCancelNo"/>
+}
+
+@if (onMinusConfirm)
+{
+    <ModalPageConfirm Title="Confirm page" Text="Are you sure, you want to delete last selected rectangle?" OnYes="@OnMinusYes" OnNo="@OnMinusNo"/>
+}
+
+@if (onSave)
+{
+    <ModalPageSave saveModel="@saveModel" OnNo="@OnSaveNo" OnYes="@OnSaveYes"/>
+}
 
 @code {
     private ElementReference img;
@@ -50,44 +63,64 @@
     private string imageDataUri, status, text, curent_rect_color = "Black";
     private double startX, endX, startY, endY;
     private List<Rect> rects = new List<Rect>();
-    private bool changed = true, can_add = false;
+    private bool changed = true, can_add = false, onCancelConfirm = false, onMinusConfirm = false, onSave = false;
     private List<Tasks> tasks = new List<Tasks>();
+    private Data.SaveModel saveModel = new Data.SaveModel();
 
-
-    private void OnMinusClick()
+    private void OnMinusActions()
     {
         if (rects.Count != 0) { 
             rects.RemoveAt(rects.Count - 1); 
         }
     }
+    private void OnMinusClick()
+    {
+        onMinusConfirm = true;
+    }
     private void OnPlusClick()
     {
         can_add = true;
     }
-    private void OnOkClick()
+    private void OnOkActions()
     {
         int idIm = DbContext.images.Count();
         Image im = new Image()
             {
                 Id = idIm + 1,
-                Name = "Image",
                 Description = imageDataUri,
             };
+        Problems problems = new Problems()
+            {
+                Name = saveModel.Name,
+                Subject = saveModel.Subject,
+                Topic = saveModel.Topic,
+                Grade = saveModel.Grade,
+                Complexity = saveModel.Complexity,
+                ImageId = im.Id,
+            };
+        DbContext.problems.Add(problems);
         DbContext.images.Add(im);
         foreach (Tasks task in tasks) task.ImageId = im.Id;
         DbContext.tasks.AddRange(tasks);
         DbContext.SaveChanges();
 
     }
-    private async void OnCancelClick()
+    private void OnOkClick()
     {
-
+        onSave = true;
+    }
+    private async void OnCancelActions()
+    {
         rects.Clear();
         imageDataUri = string.Empty;
         can_add = false;
         curent_rect_color = "Black";
         tasks.Clear();
         await context.ClearRectAsync(0, 0, 1100, 700);
+    }
+    private async void OnCancelClick()
+    {
+        onCancelConfirm = true;
     }
     private void OnMouseUp(MouseEventArgs e)
     {
@@ -134,9 +167,9 @@
         }
         catch(Exception ex){}
 
-         
+
     }
-    
+
     async Task OnChange(IFileListEntry[] files)
     {
         var rawFile = files.FirstOrDefault();
@@ -152,4 +185,34 @@
         rects.Clear();
         changed = true;
     }
+
+    private void OnCancelYes()
+    {
+        onCancelConfirm = false;
+        OnCancelActions();
+    }
+    private void OnCancelNo()
+    {
+        onCancelConfirm = false;
+    }
+
+    private void OnMinusYes()
+    {
+        onMinusConfirm = false;
+        OnMinusActions();
+    }
+    private void OnMinusNo()
+    {
+        onMinusConfirm = false;
+    }
+    private void OnSaveYes()
+    {
+        onSave = false;
+        OnOkActions();
+    }
+    private void OnSaveNo()
+    {
+        onSave = false;
+    }
+}
 }

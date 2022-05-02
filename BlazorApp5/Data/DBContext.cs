@@ -7,7 +7,8 @@ public class DBContext : DbContext
 
     public DbSet<Image> images { get; set; } = null!;
     public DbSet<Tasks> tasks { get; set; } = null!;
-    //public DbSet<Problems> problems { get; set; } = null!;
+	public DbSet<Problems> problems { get; set; } = null!;
+	//public DbSet<Problems> problems { get; set; } = null!;
 
 	/*protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 	=> optionsBuilder
@@ -15,7 +16,9 @@ public class DBContext : DbContext
 	*/
 	protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+		modelBuilder.Entity<Problems>().ToTable("Problems");
 		modelBuilder.Entity<Image>().ToTable("Images");
 		modelBuilder.Entity<Tasks>().ToTable("Tasks");
+
 	}
 }

@@ -1,0 +1,77 @@
+﻿<div class="modal fade show" id="myModal" style="display:block; background-color: rgba(10,10,10,.8);" aria-modal="true" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">@Title</h4>
+            </div>
+            <div class="modal-body">
+                <p>@Text</p>
+                <div>
+                    <table border="1">
+                        <tr>
+                            <th>
+                                <p style="display: table-cell">Problem name: </p>
+                            </th>
+                            <th>
+                                <input style="display: table-cell" @bind="saveModel.Name"/>
+                            </th>
+                        </tr>
+                        <tr>
+                            <th>
+                                <p style="display: table-cell">Subject: </p>
+                            </th>
+                            <th>
+                                <input style="display: table-cell" @bind="saveModel.Subject"/>
+                            </th>
+                        </tr>
+                        <tr>
+                            <th>
+                                <p style="display: table-cell">Topic: </p>
+                            </th>
+                            <th>
+                                <input style="display: table-cell" @bind="saveModel.Topic"/>
+                            </th>
+                        </tr>
+                        <tr>
+                            <th>
+                                <p style="display: table-cell">Grade: </p>
+                            </th>
+                            <th>
+                                <input style="display: table-cell" @bind="saveModel.Grade"/>
+                            </th>
+                        </tr>
+                        <tr>
+                            <th>
+                                <p style="display: table-cell">Level of complexity: </p>
+                            </th>
+                            <th>
+                                <input style="display: table-cell" @bind="saveModel.Complexity"/>
+                            </th>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button @onclick="OnNo">No</button>
+                <button @onclick="OnYes">Yes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@code{
+    [Parameter]
+    public string Title { get; set; }
+
+    [Parameter]
+    public string Text { get; set; }
+
+    [Parameter]
+    public EventCallback OnYes { get; set; }
+
+    [Parameter]
+    public EventCallback OnNo { get; set; }
+
+    [Parameter]
+    public Data.SaveModel saveModel { get; set; }
+}

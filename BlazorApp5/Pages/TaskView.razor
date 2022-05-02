@@ -8,25 +8,32 @@
     <tr>
         <th>ProblemId</th>
         <th>Name</th>
+        <th>Subject</th>
+        <th>Topic</th>
+        <th>Grade</th>
+        <th>Complexity</th>
     </tr>
-    @if(images.Count != 0)
-    @foreach(Image im in images)
+    @if(problems.Count != 0)
+    @foreach(Problems pr in problems)
     {
         <tr>
-            <td>@im.Id</td>
-            <td><a href="/task/@im.Id">@im.Name</a></td>
+            <td>@pr.Id</td>
+            <td><a href="/task/@pr.Id">@pr.Name</a></td>
+            <td>@pr.Subject</td>
+            <td>@pr.Topic</td>
+            <td>@pr.Grade</td>
+            <td>@pr.Complexity</td>
         </tr>
     }
 </table>
 
 @code {
     private string text;
-    private List<Image> images;
-    private List<Tasks> tasks;
+    private List<Problems> problems;
 
     protected override void OnInitialized()
     {
-        images = DbContext.images.ToList();
+        problems = DbContext.problems.ToList();
         base.OnInitialized();
     }
 

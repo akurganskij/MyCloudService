@@ -9,7 +9,7 @@
             </div>
             <div class="modal-footer">
                 <button @onclick="OnNo">No</button>
-                <button>Yes</button>
+                <button @onclick="OnYes">Yes</button>
             </div>
         </div>
     </div>
@@ -23,8 +23,8 @@
     public string Text { get; set; }
 
     [Parameter]
-    public EventCallback<bool> OnYes { get; set; }
+    public EventCallback OnYes { get; set; }
 
     [Parameter]
-    public EventCallback<bool> OnNo { get; set; }
+    public EventCallback OnNo { get; set; }
 }
