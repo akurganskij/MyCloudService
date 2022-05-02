@@ -7,45 +7,53 @@
             <div class="modal-body">
                 <p>@Text</p>
                 <div>
-                    <table border="1">
-                        <tr>
+                    <table style="border: 1px solid; border-collapse: collapse" width="100%">
+                        <tr style="border: 1px solid;">
                             <th>
                                 <p style="display: table-cell">Problem name: </p>
                             </th>
                             <th>
-                                <input style="display: table-cell" @bind="saveModel.Name"/>
+                                <input style="display: table-cell; width: 100%;" @bind="saveModel.Name"/>
                             </th>
                         </tr>
-                        <tr>
+                        <tr style="border: 1px solid;">
                             <th>
                                 <p style="display: table-cell">Subject: </p>
                             </th>
                             <th>
-                                <input style="display: table-cell" @bind="saveModel.Subject"/>
+                                <input style="display: table-cell; width: 100%;" @bind="saveModel.Subject"/>
                             </th>
                         </tr>
-                        <tr>
+                        <tr style="border: 1px solid;">
                             <th>
                                 <p style="display: table-cell">Topic: </p>
                             </th>
                             <th>
-                                <input style="display: table-cell" @bind="saveModel.Topic"/>
+                                <input style="display: table-cell; width: 100%;" @bind="saveModel.Topic"/>
                             </th>
                         </tr>
-                        <tr>
+                        <tr style="border: 1px solid;">
                             <th>
                                 <p style="display: table-cell">Grade: </p>
                             </th>
                             <th>
-                                <input style="display: table-cell" @bind="saveModel.Grade"/>
+                                <input style="display: table-cell; width: 100%;" @bind="saveModel.Grade"/>
                             </th>
                         </tr>
-                        <tr>
+                        <tr style="border: 1px solid;">
                             <th>
                                 <p style="display: table-cell">Level of complexity: </p>
                             </th>
                             <th>
-                                <input style="display: table-cell" @bind="saveModel.Complexity"/>
+                                <select  style="display: table-cell; width: 100%;" @bind="compl">
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                    <option value="6">6</option>
+                                    <option value="7">7</option>
+                                </select>
                             </th>
                         </tr>
                     </table>
@@ -74,4 +82,11 @@
 
     [Parameter]
     public Data.SaveModel saveModel { get; set; }
+
+    private string compl = "1";
+
+    protected override void OnAfterRender(bool firstRender)
+    {
+        saveModel.Complexity = compl;
+    }
 }

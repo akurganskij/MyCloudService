@@ -1,4 +1,8 @@
 ﻿
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
+
 public class Image
 {
     public int Id { get; set; }
@@ -6,6 +10,9 @@ public class Image
 
     public List<Tasks>? Tasks { get; set; }
 
+    [ForeignKey("ProblemForeignKey")]
+    public int ProblemId { get; set; }
+    public Problems Problem { get; set; }
 }
 
 
@@ -30,8 +37,8 @@ public class Problems
     public string Name { get; set; }
     public string Subject { get; set; }
     public string Topic { get; set; }
-    public int Grade { get; set; }
-    public int Complexity { get; set; }
+    public string Grade { get; set; }
+    public string Complexity { get; set; }
     public int ImageId { get; set; }
     public Image Image { get; set; }
 }

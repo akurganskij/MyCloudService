@@ -4,25 +4,25 @@
 @inject DBContext DbContext
 <h3>@text</h3>
 
-<table>
-    <tr>
-        <th>ProblemId</th>
-        <th>Name</th>
-        <th>Subject</th>
-        <th>Topic</th>
-        <th>Grade</th>
-        <th>Complexity</th>
+<table class="tables">
+    <tr class="trs">
+        <th class="thes" width="8%">Problem Id</th>
+        <th class="thes">Name</th>
+        <th class="thes">Subject</th>
+        <th class="thes">Topic</th>
+        <th class="thes" width="8%">Grade</th>
+        <th class="thes" width="8%">Complexity</th>
     </tr>
     @if(problems.Count != 0)
     @foreach(Problems pr in problems)
     {
-        <tr>
-            <td>@pr.Id</td>
-            <td><a href="/task/@pr.Id">@pr.Name</a></td>
-            <td>@pr.Subject</td>
-            <td>@pr.Topic</td>
-            <td>@pr.Grade</td>
-            <td>@pr.Complexity</td>
+        <tr class="trs">
+            <td class="tds">@pr.Id</td>
+            <td class="tds"><a href="/task/@pr.Id">@pr.Name</a></td>
+            <td class="tds">@pr.Subject</td>
+            <td class="tds">@pr.Topic</td>
+            <td class="tds">@pr.Grade</td>
+            <td class="tds">@pr.Complexity</td>
         </tr>
     }
 </table>

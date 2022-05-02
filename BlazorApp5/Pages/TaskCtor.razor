@@ -9,64 +9,77 @@
 
 
 <div class="instrument_panel">
-    <button style="background-color: white;" @onclick="OnPlusClick">
-        <img src="/plus.png"/>
+    <button class="button" @onclick="OnPlusClick">
+        <div class="button-div">
+            <img class="button-content" src="/plus.png"/>
+            <p class="button-content">Add</p>
+        </div>
     </button>
-    <button style="background-color: white;" @onclick="OnMinusClick">
-        <img src="/minus.png"/>
+    <button class="button" @onclick="OnMinusClick">
+        <div class="button-div">
+            <img class="button-content" src="/minus.png"/>
+            <p class="button-content">Undo</p>
+        </div>
     </button>
-    <button style="background-color: white;" @onclick="OnOkClick">
-        <img src="/ok.png"/>
-
+    <button class="button" @onclick="OnOkClick">
+        <div class="button-div">
+            <img class="button-content" src="/ok.png"/>
+            <p class="button-content">Save</p>
+        </div>
     </button>
-    <button style="background-color: white;" @onclick="OnCancelClick">
-        <img src="/cancel.png"/>
+    <button class="button" @onclick="OnCancelClick">
+        <div class="button-div">
+            <img class="button-content" src="/cancel.png"/>
+            <p class="button-content">Discard</p>
+        </div>
     </button>
 
     <select class="color_pick" @bind="curent_rect_color">
-        <option value="Black">Black</option>
-        <option value="Red">Red</option>
-        <option value="Green">Green</option>
-        <option value="Blue">Blue</option>
-        <option value="Yellow">Yellow</option>
-        <option value="White">White</option>
-        <option value="Orange">Orange</option>
-        <option value="Purple">Purple</option>
+        <option value="Black">&#11035;Black</option>
+        <option value="Red">&#128997;Red</option>
+        <option value="Green">&#129001;Green</option>
+        <option value="Blue">&#128998;Blue</option>
+        <option value="Yellow">&#129000;Yellow</option>
+        <option value="White">&#11036;White</option>
+        <option value="Orange">&#128999;Orange</option>
+        <option value="Purple">&#129002;Purple</option>
     </select>
 </div>
 
 <div @onmouseup="OnMouseUp" @onmousedown="OnMouseDown">
     <BECanvas Width="1100" Height="700" @ref="canvas"/>
 </div>
-<BlazorInputFile.InputFile OnChange="OnChange"/>
+<BlazorInputFile.InputFile OnChange="OnChange" />
+
 <img hidden src="@imageDataUri" @ref="img"/>
 
 @if (onCancelConfirm)
 {
-    <ModalPageConfirm Title="Confirm page" Text="Are you sure, you want to delete all the data you have made?" OnYes="@OnCancelYes" OnNo="@OnCancelNo"/>
+    <ModalPageConfirm Title="Discard all you've done" Text="Are you sure, you want to delete all the data you have made?" OnYes="@OnCancelYes" OnNo="@OnCancelNo"/>
 }
 
 @if (onMinusConfirm)
 {
-    <ModalPageConfirm Title="Confirm page" Text="Are you sure, you want to delete last selected rectangle?" OnYes="@OnMinusYes" OnNo="@OnMinusNo"/>
+    <ModalPageConfirm Title="Undo last question" Text="Are you sure, you want to delete last selected rectangle?" OnYes="@OnMinusYes" OnNo="@OnMinusNo"/>
 }
 
 @if (onSave)
 {
-    <ModalPageSave saveModel="@saveModel" OnNo="@OnSaveNo" OnYes="@OnSaveYes"/>
+    <ModalPageSave saveModel="@saveModel" OnNo="@OnSaveNo" OnYes="@OnSaveYes" Title="Save your exercise" Text="If you finish creating tasks, complete form below to set all the properties and post your work."/>
 }
-@if (true)
+@if (questionDialog)
 {
-    <AddQuestionModalPage />
+    <AddQuestionModalPage Question="@questions" OnOk="@OnQuestionOk" Title="Set question for the area you've chosen" Text="Input in box bellow your question for chosen area"/>
 }
 @code {
     private ElementReference img;
     protected BECanvasComponent canvas;
     private Canvas2DContext context;
     private string imageDataUri, status, text, curent_rect_color = "Black";
+    private Data.Questions questions = new Data.Questions();
     private double startX, endX, startY, endY;
     private List<Rect> rects = new List<Rect>();
-    private bool changed = true, can_add = false, onCancelConfirm = false, onMinusConfirm = false, onSave = false;
+    private bool changed = true, can_add = false, onCancelConfirm = false, onMinusConfirm = false, onSave = false, questionDialog = false;
     private List<Tasks> tasks = new List<Tasks>();
     private Data.SaveModel saveModel = new Data.SaveModel();
 
@@ -87,13 +100,16 @@
     private void OnOkActions()
     {
         int idIm = DbContext.images.Count();
+        int probId = DbContext.problems.Count();
         Image im = new Image()
             {
                 Id = idIm + 1,
                 Description = imageDataUri,
+                ProblemId = probId + 1,
             };
         Problems problems = new Problems()
             {
+                Id = probId + 1,
                 Name = saveModel.Name,
                 Subject = saveModel.Subject,
                 Topic = saveModel.Topic,
@@ -133,15 +149,8 @@
             endY = e.OffsetY;
             rects.Add(new Rect() { x = startX, y = startY, width = endX - startX, height = endY - startY, color = curent_rect_color });
             can_add = false;
-            Tasks ts = new Tasks()
-            {
-                x1 = startX,
-                x2 = endX,
-                y1 = startY,
-                y2 = endY,
-                question = "njkfjsj"
-            };
-            tasks.Add(ts);
+
+            questionDialog = true;
         }
     }
     private void OnMouseDown(MouseEventArgs e)
@@ -208,11 +217,29 @@
     }
     private void OnSaveYes()
     {
+        if(String.IsNullOrWhiteSpace(saveModel.Name)) return;
+        if(String.IsNullOrWhiteSpace(saveModel.Subject)) return;
+        if(String.IsNullOrWhiteSpace(saveModel.Topic)) return;
+        if(String.IsNullOrWhiteSpace(saveModel.Grade)) return;
         onSave = false;
         OnOkActions();
+        OnCancelActions();
     }
     private void OnSaveNo()
     {
         onSave = false;
+    }
+    private void OnQuestionOk()
+    {
+        questionDialog = false;
+        Tasks ts = new Tasks()
+            {
+                x1 = startX,
+                x2 = endX,
+                y1 = startY,
+                y2 = endY,
+                question = questions.Question,
+            };
+        tasks.Add(ts);
     }
 }

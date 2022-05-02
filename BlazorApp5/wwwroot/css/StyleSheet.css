@@ -1,9 +1,28 @@
 ﻿.instrument_panel{
     display: table;
     background-color: lightgray;
-    margin: 5px, 5px, 5px, 5px;
-    width: inherit;
+    width: 100%;
+    align-items: baseline;
+    padding: 5px;
 }
-.color_pick{
-    align-items: end;
+.color_pick {
+    float: right;
+    width: 10%;
+    margin: 2px;
+    padding: 10px;
+    background-color: floralwhite;
+}
+
+.button{
+    background-color: transparent;
+    border: none;
+    align-items:center;
+}
+
+.button-div{
+    display: table;
+}
+
+.button-content{
+    display: table-cell;
 }

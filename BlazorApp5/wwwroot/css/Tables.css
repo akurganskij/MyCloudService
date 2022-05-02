@@ -1,0 +1,17 @@
+﻿.tables{
+    width: 100%;
+    border: 1px solid;
+    border-collapse: collapse;
+}
+
+.trs{
+    border: 1px solid;
+}
+
+.thes{
+    border: 1px solid;
+}
+
+.tds{
+    border: 1px solid;
+}

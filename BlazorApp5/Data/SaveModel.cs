@@ -8,8 +8,8 @@
 
         public string Topic { get; set; }
 
-        public int Grade { get; set; }
+        public string Grade { get; set; }
 
-        public int Complexity { get; set; }
+        public string Complexity { get; set; }
     }
 }

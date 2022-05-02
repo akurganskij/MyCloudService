@@ -6,7 +6,7 @@
             </div>
             <div class="modal-body">
                 <p>@Text</p>
-                <input @bind="Question"/>
+                <input style="width: 100%;" @bind="Question.Question"/>
             </div>
             <div class="modal-footer">
                 <button @onclick="OnOk">Ok</button>
@@ -27,5 +27,5 @@
 
 
     [Parameter]
-    public string Question { get; set; }
+    public Data.Questions Question { get; set; }
 }
