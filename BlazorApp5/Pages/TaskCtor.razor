@@ -55,7 +55,10 @@
 {
     <ModalPageSave saveModel="@saveModel" OnNo="@OnSaveNo" OnYes="@OnSaveYes"/>
 }
-
+@if (true)
+{
+    <AddQuestionModalPage />
+}
 @code {
     private ElementReference img;
     protected BECanvasComponent canvas;
@@ -166,8 +169,6 @@
             }
         }
         catch(Exception ex){}
-
-
     }
 
     async Task OnChange(IFileListEntry[] files)
@@ -214,5 +215,4 @@
     {
         onSave = false;
     }
-}
 }
