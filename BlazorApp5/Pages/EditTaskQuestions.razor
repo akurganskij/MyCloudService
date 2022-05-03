@@ -1,0 +1,52 @@
+﻿<div class="modal fade show" id="myModal" style="display:block; background-color: rgba(10,10,10,.8);" aria-modal="true" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+    <div class="modal-header">
+                <h4 class="modal-title">@Title</h4>
+            </div>
+            <div class="modal-body">
+                <table class="tables">
+                    <tr class="trs">
+                        <th class="thes" width="8%">Id</th>
+                        <th class="thes" width="8%">x1</th>
+                        <th class="thes" width="8%">x2</th>
+                        <th class="thes" width="8%">y1</th>
+                        <th class="thes" width="8%">y2</th>
+                        <th class="thes">Question</th>
+                    </tr>
+                    @if(tasks.Count != 0)
+                    @foreach(Tasks pr in tasks)
+                    {
+                        <tr class="trs">
+                            <td class="tds">@iter</td>
+                            <td class="tds">@pr.x1</td>
+                            <td class="tds">@pr.x2</td>
+                            <td class="tds">@pr.y1</td>
+                            <td class="tds">@pr.y2</td>
+                            <td class="tds">
+                                <input style="float: right; width: 100%;" @bind="@pr.question"/>
+                            </td>
+                        </tr>
+                        ++iter;
+                    }
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button @onclick="OnYes">Ok</button>
+            </div>
+            </div>
+            </div>
+</div>
+
+@code{
+    [Parameter]
+    public string Title { get; set; }
+
+    [Parameter]
+    public List<Tasks> tasks { get; set; }
+
+    [Parameter]
+    public EventCallback OnYes { get; set; }
+
+    private int iter = 1;
+}

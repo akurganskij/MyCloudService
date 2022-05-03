@@ -1,19 +1,66 @@
-﻿@page "/task/{ImageId:int}"
+﻿@page "/task/{ProblemId:int}"
 @inject DBContext DbContext
-<h3>@tasks.Count</h3>
-<div>
+
+@if (showQuestion)
+{
+    <h3>@tasks[tasknum].question</h3>
+}
+<div @onclick="OnImageClick">
     <img src="@image.Description"/>
 </div>
-@code {
-    [Parameter]
-    public int? ImageId { get; set; }
 
+@if (correct)
+{
+    <button @onclick="OnNextClick">Next question</button>
+}
+
+@if (complete)
+{
+    <TaskCompleteModalPage />
+}
+@code {
+        [Parameter]
+        public int? ProblemId { get; set; }
+
+    private int tasknum = 0;
+    private bool correct = false, complete = false, showQuestion = true;
+
+    private Problems problems;
     private Image image;
     private List<Tasks> tasks;
 
     protected override void OnInitialized()
     {
-        image = DbContext.images.Find(ImageId);
-        tasks = DbContext.tasks.Where(i => i.ImageId == ImageId).ToList();
+        problems = DbContext.problems.Find(ProblemId);
+        image = DbContext.images.Find(problems.ImageId);
+        tasks = DbContext.tasks.Where(i => i.ImageId == image.Id).ToList();
+    }
+
+    private void OnImageClick(MouseEventArgs e)
+    {
+        double x, y;
+        x = e.OffsetX;
+        y = e.OffsetY;
+        if(tasks[tasknum].x1 > tasks[tasknum].x2)
+        {
+            if (x > tasks[tasknum].x2 && x < tasks[tasknum].x1) correct = true;
+        }
+        else
+        {
+            if (x < tasks[tasknum].x2 && x > tasks[tasknum].x1) correct = true;
+        }
+    }
+    private void OnNextClick()
+    {
+        if (tasknum < tasks.Count)
+        {            
+            ++tasknum;
+            correct = false;
+            if (tasknum == tasks.Count) {
+                showQuestion = false;
+                tasknum = 0;
+                complete = true;
+            }
+        }
     }
 }

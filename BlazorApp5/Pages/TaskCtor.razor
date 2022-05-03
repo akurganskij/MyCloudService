@@ -33,6 +33,12 @@
             <p class="button-content">Discard</p>
         </div>
     </button>
+    <button class="button" @onclick="OnEditClick">
+        <div class="button-div">
+            <img class="button-content" src="/editQuestions.png"/>
+            <p class="button-content">Edit Questions</p>
+        </div>
+    </button>
 
     <select class="color_pick" @bind="curent_rect_color">
         <option value="Black">&#11035;Black</option>
@@ -71,6 +77,10 @@
 {
     <AddQuestionModalPage Question="@questions" OnOk="@OnQuestionOk" Title="Set question for the area you've chosen" Text="Input in box bellow your question for chosen area"/>
 }
+@if (editpage)
+{
+    <EditTaskQuestions tasks="@tasks" OnYes="@OnEditYes"/>
+}
 @code {
     private ElementReference img;
     protected BECanvasComponent canvas;
@@ -79,7 +89,7 @@
     private Data.Questions questions = new Data.Questions();
     private double startX, endX, startY, endY;
     private List<Rect> rects = new List<Rect>();
-    private bool changed = true, can_add = false, onCancelConfirm = false, onMinusConfirm = false, onSave = false, questionDialog = false;
+    private bool changed = true, can_add = false, onCancelConfirm = false, onMinusConfirm = false, onSave = false, questionDialog = false, editpage = false;
     private List<Tasks> tasks = new List<Tasks>();
     private Data.SaveModel saveModel = new Data.SaveModel();
 
@@ -241,5 +251,18 @@
                 question = questions.Question,
             };
         tasks.Add(ts);
+        questions.Question = String.Empty;
+    }
+    private void OnEditClick()
+    {
+        editpage = true;
+    }
+    private void OnEditYes()
+    {
+        editpage = false;
+    }
+    private void OnEditNo()
+    {
+        editpage = false;
     }
 }
