@@ -12,6 +12,7 @@
         <th class="thes">Topic</th>
         <th class="thes" width="8%">Grade</th>
         <th class="thes" width="8%">Complexity</th>
+        <th class="thes" width="8%">Timer</th>
     </tr>
     @if(problems.Count != 0)
     @foreach(Problems pr in problems)
@@ -23,6 +24,7 @@
             <td class="tds">@pr.Topic</td>
             <td class="tds">@pr.Grade</td>
             <td class="tds">@pr.Complexity</td>
+            <td class="tds">@pr.EnableTimer</td>
         </tr>
     }
 </table>

@@ -6,6 +6,7 @@
             </div>
             <div class="modal-body">
                 <p>@Text</p>
+                <p>You have answered correctly @correct of @total</p>
             </div>
             <div class="modal-footer">
                 <button @onclick="OnOk">Ok</button>
@@ -20,6 +21,12 @@
 
     [Parameter]
     public string Text { get; set; }
+
+    [Parameter]
+    public int correct { get; set; }
+
+    [Parameter]
+    public int total { get; set; }
 
     [Parameter]
     public EventCallback OnOk { get; set; }

@@ -56,6 +56,33 @@
                                 </select>
                             </th>
                         </tr>
+                        <tr style="border: 1px solid;">
+                            <th>
+                                <p style="display: table-cell">Randomise: </p>
+                            </th>
+                            <th>
+                                <input type="checkbox" @bind="saveModel.Randomise"/>
+                            </th>
+                        </tr>
+                        <tr style="border: 1px solid;">
+                            <th>
+                                <p style="display: table-cell">Enable Timer: </p>
+                            </th>
+                            <th>
+                                <input type="checkbox" @bind="saveModel.EnableTimer"/>
+                            </th>
+                        </tr>
+                        @if (saveModel.EnableTimer)
+                        {
+                            <tr style="border: 1px solid;">
+                            <th>
+                                <p style="display: table-cell">Timer duration: </p>
+                            </th>
+                            <th>
+                                <input style="width: 100%;" type="number" @bind="saveModel.TimerDuration"/>
+                            </th>
+                        </tr>
+                        }
                     </table>
                 </div>
             </div>
