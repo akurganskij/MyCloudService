@@ -83,6 +83,25 @@
                             </th>
                         </tr>
                         }
+                        <tr style="border: 1px solid;">
+                            <th>
+                                <p style="display: table-cell">Limit attempts: </p>
+                            </th>
+                            <th>
+                                <input type="checkbox" @bind="saveModel.LimitAttempts"/>
+                            </th>
+                        </tr>
+                        @if (saveModel.LimitAttempts)
+                        {
+                            <tr style="border: 1px solid;">
+                            <th>
+                                <p style="display: table-cell">Maximum attempts: </p>
+                            </th>
+                            <th>
+                                <input style="width: 100%;" type="number" @bind="saveModel.MaxAttempts"/>
+                            </th>
+                        </tr>
+                        }
                     </table>
                 </div>
             </div>

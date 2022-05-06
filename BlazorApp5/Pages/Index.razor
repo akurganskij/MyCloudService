@@ -1,12 +1,36 @@
 ﻿@page "/"
+@inject NavigationManager NavigationManager
+@inject DBContext DbContext
 
-Hello
-<p3>@text</p3>
+<h1 style="text-align:center;">Welcome to constructor of excercises!</h1>
+
+<h2 style="text-align:center;">Look at existing excercises:</h2>
+
+<ul class="task-cards">
+@if (problem.Count != 0)
+{
+    @foreach (Problems pr in problem)
+    {
+        <li @onclick=" () => NavigationManager.NavigateTo(NavigationManager.BaseUri + url + pr.Id)" style="background-image: url('@images.Find(p => p.Id == pr.ImageId).Description'); ">
+            <div class="task-info">
+                <span class="title">@pr.Name</span>
+                <span class="title">@pr.Subject</span>
+            </div>
+        </li>
+    }
+}
+</ul>
 
 @code{
-    private string text;
-    protected override Task OnInitializedAsync()
+    private bool onHoover = false;
+    private string text, url = "/task/";
+    private List<Problems> problem;
+    private List<Image> images;
+
+    protected override void OnInitialized()
     {
-        return base.OnInitializedAsync();
+        problem = DbContext.problems.ToList();
+        images = DbContext.images.ToList();
+        base.OnInitialized();
     }
 }

@@ -1,0 +1,14 @@
+﻿<div class="modal fade show" id="myModal" style="display:contents; background-color: rgba(10,10,10,.0);" aria-modal="true" role="dialog">
+<div class="alert">
+  <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
+  <strong>Danger!</strong> Indicates a dangerous or potentially negative action.
+</div>
+</div>
+
+@code{
+    [Parameter]
+    public string Title { get; set; }
+
+    [Parameter]
+    public string Text { get; set; }
+}

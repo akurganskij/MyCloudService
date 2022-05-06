@@ -17,5 +17,9 @@
         public bool EnableTimer { get; set; }
 
         public int TimerDuration { get; set; }
+
+        public bool LimitAttempts { get; set; }
+
+        public int MaxAttempts { get; set; }
     }
 }

@@ -1,4 +1,5 @@
 ﻿@page "/taskView"
+@using System.Linq
 @inject HttpClient HttpClient
 @inject NavigationManager NavigationManager
 @inject DBContext DbContext
@@ -6,16 +7,25 @@
 
 <table class="tables">
     <tr class="trs">
-        <th class="thes" width="8%">Problem Id</th>
-        <th class="thes">Name</th>
-        <th class="thes">Subject</th>
-        <th class="thes">Topic</th>
-        <th class="thes" width="8%">Grade</th>
-        <th class="thes" width="8%">Complexity</th>
-        <th class="thes" width="8%">Timer</th>
+        <th class="thes" width="8%" @onclick="() => sortParam = 0">Problem Id</th>
+        <th class="thes" @onclick="() => sortParam = 1">Name</th>
+        <th class="thes" @onclick="() => sortParam = 2">Subject</th>
+        <th class="thes" @onclick="() => sortParam = 3">Topic</th>
+        <th class="thes" width="8%" @onclick="() => sortParam = 4">Grade</th>
+        <th class="thes" width="8%" @onclick="() => sortParam = 5">Complexity</th>
+        <th class="thes" width="8%" @onclick="() => sortParam = 6">Timer</th>
     </tr>
+    <tr class="trs">
+            <td class="tds"><input @oninput="x => id = x.Value.ToString()"/></td>
+            <td class="tds"><input @oninput="x => name = x.Value.ToString()"/></td>
+            <td class="tds"><input @oninput="x => subject = x.Value.ToString()"/></td>
+            <td class="tds"><input @oninput="x => topic = x.Value.ToString()"/></td>
+            <td class="tds"><input @oninput="x => grade = x.Value.ToString()"/></td>
+            <td class="tds"><input @oninput="x => complexity = x.Value.ToString()"/></td>
+            <td class="tds"><input @oninput="x => timer = x.Value.ToString()" /></td>
+        </tr>
     @if(problems.Count != 0)
-    @foreach(Problems pr in problems)
+    @foreach(Problems pr in problems.Where( t => check(t) == true).OrderBy(o => prop(o)))
     {
         <tr class="trs">
             <td class="tds">@pr.Id</td>
@@ -30,7 +40,11 @@
 </table>
 
 @code {
+    private int sortParam = 0;
     private string text;
+    private string name = String.Empty, subject = String.Empty, topic = String.Empty, grade = String.Empty, id = String.Empty, complexity = String.Empty;
+    private string timer = String.Empty;
+
     private List<Problems> problems;
 
     protected override void OnInitialized()
@@ -39,4 +53,27 @@
         base.OnInitialized();
     }
 
+    private bool check(Problems p)
+    {
+        return p.Id.ToString().ToLower().StartsWith(id.ToLower()) && 
+        p.Name.ToLower().StartsWith(name.ToLower()) && 
+        p.Subject.ToLower().StartsWith(subject.ToLower()) && 
+        p.Topic.ToLower().StartsWith(topic.ToLower()) && 
+        p.Complexity.ToLower().ToString().StartsWith(complexity.ToLower()) && 
+        p.EnableTimer.ToString().ToLower().StartsWith(timer.ToLower());
+    }
+
+    private IComparable prop(Problems p)
+    {
+        switch (sortParam) {
+            case 0: return p.Id; break;
+            case 1: return p.Name; break;
+            case 2: return p.Subject; break;
+            case 3: return p.Topic; break;
+            case 4: return p.Grade; break;
+            case 5: return p.Complexity; break;
+            case 6: return p.EnableTimer; break;
+        }
+        return p.Id;
+    }
 }
