@@ -3,26 +3,29 @@
 @inject HttpClient HttpClient
 @inject NavigationManager NavigationManager
 @inject DBContext DbContext
+@using System.Globalization
+
+@inject IStringLocalizer<Shared.ResourceFiles.TaskViewPage> Loc
 <h3>@text</h3>
 
 <table class="tables">
     <tr class="trs">
-        <th class="thes" width="8%" @onclick="() => sortParam = 0">Problem Id</th>
-        <th class="thes" @onclick="() => sortParam = 1">Name</th>
-        <th class="thes" @onclick="() => sortParam = 2">Subject</th>
-        <th class="thes" @onclick="() => sortParam = 3">Topic</th>
-        <th class="thes" width="8%" @onclick="() => sortParam = 4">Grade</th>
-        <th class="thes" width="8%" @onclick="() => sortParam = 5">Complexity</th>
-        <th class="thes" width="8%" @onclick="() => sortParam = 6">Timer</th>
+        <th width="10%" class="thes" @onclick="() => sortParam = 0">@Loc["Id"]</th>
+        <th width="20%" class="thes" @onclick="() => sortParam = 1">@Loc["Name"]</th>
+        <th width="20%" class="thes" @onclick="() => sortParam = 2">@Loc["Subject"]</th>
+        <th width="20%" class="thes" @onclick="() => sortParam = 3">@Loc["Topic"]</th>
+        <th width="10%" class="thes" @onclick="() => sortParam = 4">@Loc["Grade"]</th>
+        <th width="10%" class="thes" @onclick="() => sortParam = 5">@Loc["Complexity"]</th>
+        <th width="10%" class="thes" @onclick="() => sortParam = 6">@Loc["Timer"]</th>
     </tr>
     <tr class="trs">
-            <td class="tds"><input @oninput="x => id = x.Value.ToString()"/></td>
-            <td class="tds"><input @oninput="x => name = x.Value.ToString()"/></td>
-            <td class="tds"><input @oninput="x => subject = x.Value.ToString()"/></td>
-            <td class="tds"><input @oninput="x => topic = x.Value.ToString()"/></td>
-            <td class="tds"><input @oninput="x => grade = x.Value.ToString()"/></td>
-            <td class="tds"><input @oninput="x => complexity = x.Value.ToString()"/></td>
-            <td class="tds"><input @oninput="x => timer = x.Value.ToString()" /></td>
+            <td class="tds"><input style="width: 100%;" @oninput="x => id = x.Value.ToString()"/></td>
+            <td class="tds"><input style="width: 100%;" @oninput="x => name = x.Value.ToString()"/></td>
+            <td class="tds"><input style="width: 100%;" @oninput="x => subject = x.Value.ToString()"/></td>
+            <td class="tds"><input style="width: 100%;" @oninput="x => topic = x.Value.ToString()"/></td>
+            <td class="tds"><input style="width: 100%;" @oninput="x => grade = x.Value.ToString()"/></td>
+            <td class="tds"><input style="width: 100%;" @oninput="x => complexity = x.Value.ToString()"/></td>
+            <td class="tds"><input style="width: 100%;" @oninput="x => timer = x.Value.ToString()" /></td>
         </tr>
     @if(problems.Count != 0)
     @foreach(Problems pr in problems.Where( t => check(t) == true).OrderBy(o => prop(o)))
@@ -34,7 +37,7 @@
             <td class="tds">@pr.Topic</td>
             <td class="tds">@pr.Grade</td>
             <td class="tds">@pr.Complexity</td>
-            <td class="tds">@pr.EnableTimer</td>
+            <td class="tds">@timerEnabled(pr.EnableTimer)</td>
         </tr>
     }
 </table>
@@ -75,5 +78,10 @@
             case 6: return p.EnableTimer; break;
         }
         return p.Id;
+    }
+
+    private string timerEnabled(bool t){
+        if (t) return Loc["True"];
+        return Loc["False"];
     }
 }

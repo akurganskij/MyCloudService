@@ -10,6 +10,10 @@
         </div>
     </div>
 }
+@if (correct || (timeOver && problems.EnableTimer) || clickOver)
+{
+    <button @onclick="OnNextClick">Next question</button>
+}
 
 @if (showQuestion)
 {
@@ -19,10 +23,7 @@
     <img src="@image.Description"/>
 </div>
 
-@if (correct || (timeOver && problems.EnableTimer) || clickOver)
-{
-    <button @onclick="OnNextClick">Next question</button>
-}
+
 
 @if (complete)
 {

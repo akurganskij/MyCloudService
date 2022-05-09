@@ -7,6 +7,17 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <EmbeddedResource Remove="Index.en-US.resx" />
+    <EmbeddedResource Remove="Pages\IndexContent.resx" />
+    <EmbeddedResource Remove="Properties\Views\Pages\Index.uk-UA.resx" />
+    <EmbeddedResource Remove="Res\Index.en-US.resx" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Index.en-US.resx" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Blazor.Extensions.Canvas" Version="1.1.1" />
     <PackageReference Include="BlazorInputFile" Version="0.2.0" />
     <PackageReference Include="EntityFramework" Version="6.4.4" />
@@ -19,6 +30,7 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="Microsoft.Extensions.Localization" Version="6.0.4" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.3" />
     <PackageReference Include="SQLiteNetExtensions" Version="2.1.0" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.3.0" />
@@ -30,13 +42,118 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Update="Shared\ResourceFiles\CultureSelectorRes.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>CultureSelectorRes.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Shared\ResourceFiles\EditTaskQuestionsRes.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>EditTaskQuestionsRes.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Shared\ResourceFiles\IndexPage.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>IndexPage.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Shared\ResourceFiles\MainLayoutPage.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>MainLayoutPage.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Shared\ResourceFiles\MenuPage.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>MenuPage.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Shared\ResourceFiles\ModalPageConfirmRes.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>ModalPageConfirmRes.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Shared\ResourceFiles\ModalPageSaveRes.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>ModalPageSaveRes.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Shared\ResourceFiles\TaskCompleteModalPageRes.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>TaskCompleteModalPageRes.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Shared\ResourceFiles\TaskCtorPage.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>TaskCtorPage.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Shared\ResourceFiles\TaskForImPage.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>TaskForImPage.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Shared\ResourceFiles\TaskViewPage.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>TaskViewPage.resx</DependentUpon>
+    </Compile>
   </ItemGroup>
 
   <ItemGroup>
     <EmbeddedResource Update="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
+      <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Update="Shared\ResourceFiles\CultureSelectorRes.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>CultureSelectorRes.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Shared\ResourceFiles\EditTaskQuestionsRes.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>EditTaskQuestionsRes.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Shared\ResourceFiles\IndexPage.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>IndexPage.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Shared\ResourceFiles\MainLayoutPage.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>MainLayoutPage.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Shared\ResourceFiles\MenuPage.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>MenuPage.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Shared\ResourceFiles\ModalPageConfirmRes.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ModalPageConfirmRes.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Shared\ResourceFiles\ModalPageSaveRes.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ModalPageSaveRes.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Shared\ResourceFiles\TaskCompleteModalPageRes.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>TaskCompleteModalPageRes.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Shared\ResourceFiles\TaskCtorPage.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>TaskCtorPage.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Shared\ResourceFiles\TaskForImPage.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>TaskForImPage.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Shared\ResourceFiles\TaskViewPage.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>TaskViewPage.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Pages\IndexContent.resx" />
+    <Resource Include="Properties\Views\Pages\Index.uk-UA.resx" />
+    <Resource Include="Res\Index.en-US.resx" />
   </ItemGroup>
 
 </Project>

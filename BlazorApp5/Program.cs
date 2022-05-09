@@ -3,6 +3,8 @@ using BlazorApp5;
 using BlazorApp5.Models;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
+using System.Globalization;
+using Microsoft.AspNetCore.Localization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,6 +18,10 @@ builder.Services.AddScoped<ITaskRepository, TaskRepository>();
 
 builder.Services.AddHttpClient();
 builder.Services.AddSqlite<DBContext>("Data Source=image.db");
+
+builder.Services.AddLocalization();
+
+builder.Services.AddControllers();
 
 var app = builder.Build();
 
@@ -34,6 +40,7 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.MapControllers();
 app.MapBlazorHub();
 app.MapFallbackToPage("/_Host");
 
@@ -43,5 +50,13 @@ using (var scope = scopeFactory.CreateScope())
     var db = scope.ServiceProvider.GetRequiredService<DBContext>();
     if (db.Database.EnsureCreated()) SeedData.Initialize(db);
 }
+
+var supportedCultures = new[] { "en", "uk" };
+var localizationOptions = new RequestLocalizationOptions()
+    .SetDefaultCulture(supportedCultures[0])
+    .AddSupportedCultures(supportedCultures)
+    .AddSupportedUICultures(supportedCultures);
+
+app.UseRequestLocalization(localizationOptions);
 
 app.Run();

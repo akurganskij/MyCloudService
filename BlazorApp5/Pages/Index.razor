@@ -1,10 +1,13 @@
 ﻿@page "/"
 @inject NavigationManager NavigationManager
 @inject DBContext DbContext
+@using System.Globalization
 
-<h1 style="text-align:center;">Welcome to constructor of excercises!</h1>
+@inject IStringLocalizer<Shared.ResourceFiles.IndexPage> Loc
 
-<h2 style="text-align:center;">Look at existing excercises:</h2>
+<h1 style="text-align:center;">@Loc["Greeting"]</h1>
+
+<h2 style="text-align:center;">@Loc["Gallery"]</h2>
 
 <ul class="task-cards">
 @if (problem.Count != 0)
@@ -22,6 +25,10 @@
 </ul>
 
 @code{
+
+    [Parameter]
+    public string Culture { get; set; }
+
     private bool onHoover = false;
     private string text, url = "/task/";
     private List<Problems> problem;
@@ -29,8 +36,11 @@
 
     protected override void OnInitialized()
     {
+       
         problem = DbContext.problems.ToList();
         images = DbContext.images.ToList();
         base.OnInitialized();
     }
+
+
 }

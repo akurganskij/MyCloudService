@@ -2,10 +2,12 @@
     width: 100%;
     border: 1px solid;
     border-collapse: collapse;
+    table-layout: fixed;
 }
 
 .trs{
     border: 1px solid;
+    
 }
 
 .thes{

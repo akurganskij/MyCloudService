@@ -1,4 +1,10 @@
-﻿@inherits LayoutComponentBase
+﻿@using System.Globalization
+@inherits LayoutComponentBase
+@inject NavigationManager Nav
+
+@using System.Globalization
+
+@inject IStringLocalizer<Shared.ResourceFiles.MainLayoutPage> Loc
 
 <PageTitle>BlazorApp5</PageTitle>
 
@@ -9,7 +15,8 @@
 
     <main>
         <div class="top-row px-4">
-            <a href="https://docs.microsoft.com/aspnet/" target="_blank">About</a>
+            <BlazorApp5.Pages.CultureSelector />
+            <a href="https://docs.microsoft.com/aspnet/" target="_blank">@Loc["About"]</a>
         </div>
 
         <article class="content px-4">
@@ -17,3 +24,7 @@
         </article>
     </main>
 </div>
+
+@code{
+     
+}

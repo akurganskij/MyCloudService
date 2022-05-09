@@ -117,4 +117,31 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Complexity" xml:space="preserve">
+    <value>Рівень складності</value>
+  </data>
+  <data name="False" xml:space="preserve">
+    <value>Немає</value>
+  </data>
+  <data name="Grade" xml:space="preserve">
+    <value>Клас</value>
+  </data>
+  <data name="Id" xml:space="preserve">
+    <value>Номер задачі</value>
+  </data>
+  <data name="Name" xml:space="preserve">
+    <value>Назва</value>
+  </data>
+  <data name="Subject" xml:space="preserve">
+    <value>Предмет</value>
+  </data>
+  <data name="Timer" xml:space="preserve">
+    <value>Таймер</value>
+  </data>
+  <data name="Topic" xml:space="preserve">
+    <value>Тема</value>
+  </data>
+  <data name="True" xml:space="preserve">
+    <value>Є</value>
+  </data>
 </root>

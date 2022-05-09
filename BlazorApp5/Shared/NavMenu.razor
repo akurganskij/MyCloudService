@@ -1,6 +1,10 @@
-﻿<div class="top-row ps-3 navbar navbar-dark">
+﻿@using System.Globalization
+
+@inject IStringLocalizer<Shared.ResourceFiles.MenuPage> Loc
+
+<div class="top-row ps-3 navbar navbar-dark">
     <div class="container-fluid">
-        <a class="navbar-brand" href="">Exerecises</a>
+        <a class="navbar-brand" style="font-size: medium;" href="">@Loc["Name"]</a>
         <button title="Navigation menu" class="navbar-toggler" @onclick="ToggleNavMenu">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -11,13 +15,13 @@
     <nav class="flex-column">
         <div class="nav-item px-3">
             <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
-                <span class="oi oi-home" aria-hidden="true"></span> Home
+                <span class="oi oi-home" aria-hidden="true"></span> @Loc["Home"]
             </NavLink>
             <NavLink class="nav-link" href="/taskView" Match="NavLinkMatch.All">
-                <span class="oi oi-book" aria-hidden="true"></span> Tasks
+                <span class="oi oi-book" aria-hidden="true"></span> @Loc["Tasks"]
             </NavLink>
             <NavLink class="nav-link" href="constructor" Match="NavLinkMatch.All">
-                <span class="oi oi-file" aria-hidden="true"></span> Constructor
+                <span class="oi oi-file" aria-hidden="true"></span> @Loc["Constructor"]
             </NavLink>
         </div>
     </nav>

@@ -117,4 +117,11 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Gallery" xml:space="preserve">
+    <value>Look at existing excercises:</value>
+  </data>
+  <data name="Greeting" xml:space="preserve">
+    <value>Welcome to constructor of excercises!</value>
+    <comment>First Line</comment>
+  </data>
 </root>

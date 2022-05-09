@@ -117,4 +117,16 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Constructor" xml:space="preserve">
+    <value>Конструктор завдань</value>
+  </data>
+  <data name="Home" xml:space="preserve">
+    <value>Головна</value>
+  </data>
+  <data name="Name" xml:space="preserve">
+    <value>Тренажер на зображеннях</value>
+  </data>
+  <data name="Tasks" xml:space="preserve">
+    <value>Завдання</value>
+  </data>
 </root>

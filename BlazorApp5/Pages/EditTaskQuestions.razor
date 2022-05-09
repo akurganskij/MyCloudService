@@ -1,4 +1,7 @@
-﻿<div class="modal fade show" id="myModal" style="display:block; background-color: rgba(10,10,10,.8);" aria-modal="true" role="dialog">
+﻿@using System.Globalization
+
+@inject IStringLocalizer<Shared.ResourceFiles.EditTaskQuestionsRes> Loc
+<div class="modal fade show" id="myModal" style="display:block; background-color: rgba(10,10,10,.8);" aria-modal="true" role="dialog">
     <div class="modal-dialog">
         <div class="modal-content">
     <div class="modal-header">
@@ -12,7 +15,7 @@
                         <th class="thes" width="8%">x2</th>
                         <th class="thes" width="8%">y1</th>
                         <th class="thes" width="8%">y2</th>
-                        <th class="thes">Question</th>
+                        <th class="thes">@Loc["Question"]</th>
                     </tr>
                     @if(tasks.Count != 0)
                     @foreach(Tasks pr in tasks)
@@ -32,7 +35,7 @@
                 </table>
             </div>
             <div class="modal-footer">
-                <button @onclick="OnYes">Ok</button>
+                <button @onclick="OnYes">@Loc["Ok"]</button>
             </div>
             </div>
     </div>
