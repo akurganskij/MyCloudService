@@ -59,5 +59,32 @@ namespace BlazorApp5.Shared.ResourceFiles {
                 resourceCulture = value;
             }
         }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Congratulations!.
+        /// </summary>
+        public static string Congrats {
+            get {
+                return ResourceManager.GetString("Congrats", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на You&apos;ve finished this task!.
+        /// </summary>
+        public static string CongratsText {
+            get {
+                return ResourceManager.GetString("CongratsText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Next question.
+        /// </summary>
+        public static string NextBtn {
+            get {
+                return ResourceManager.GetString("NextBtn", resourceCulture);
+            }
+        }
     }
 }

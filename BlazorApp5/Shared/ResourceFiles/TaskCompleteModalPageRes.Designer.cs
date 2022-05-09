@@ -59,5 +59,23 @@ namespace BlazorApp5.Shared.ResourceFiles {
                 resourceCulture = value;
             }
         }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на You have answered correctly {0} of {1}.
+        /// </summary>
+        public static string Answ {
+            get {
+                return ResourceManager.GetString("Answ", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Ok.
+        /// </summary>
+        public static string Ok {
+            get {
+                return ResourceManager.GetString("Ok", resourceCulture);
+            }
+        }
     }
 }

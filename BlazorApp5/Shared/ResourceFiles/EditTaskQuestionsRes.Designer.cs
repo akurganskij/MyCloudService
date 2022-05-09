@@ -61,6 +61,15 @@ namespace BlazorApp5.Shared.ResourceFiles {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Id.
+        /// </summary>
+        public static string Id {
+            get {
+                return ResourceManager.GetString("Id", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Ok.
         /// </summary>
         public static string Ok {

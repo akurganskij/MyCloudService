@@ -1,4 +1,8 @@
-﻿<div class="modal fade show" id="myModal" style="display:block; background-color: rgba(10,10,10,.8);" aria-modal="true" role="dialog">
+﻿@using System.Globalization
+
+@inject IStringLocalizer<Shared.ResourceFiles.ModalPageSaveRes> Loc
+
+<div class="modal fade show" id="myModal" style="display:block; background-color: rgba(10,10,10,.8);" aria-modal="true" role="dialog">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -10,7 +14,7 @@
                     <table style="border: 1px solid; border-collapse: collapse" width="100%">
                         <tr style="border: 1px solid;">
                             <th>
-                                <p style="display: table-cell">Problem name: </p>
+                                <p style="display: table-cell">@Loc["Name"]:</p>
                             </th>
                             <th>
                                 <input style="display: table-cell; width: 100%;" @bind="saveModel.Name"/>
@@ -18,7 +22,7 @@
                         </tr>
                         <tr style="border: 1px solid;">
                             <th>
-                                <p style="display: table-cell">Subject: </p>
+                                <p style="display: table-cell">@Loc["Subject"]: </p>
                             </th>
                             <th>
                                 <input style="display: table-cell; width: 100%;" @bind="saveModel.Subject"/>
@@ -26,7 +30,7 @@
                         </tr>
                         <tr style="border: 1px solid;">
                             <th>
-                                <p style="display: table-cell">Topic: </p>
+                                <p style="display: table-cell">@Loc["Topic"]: </p>
                             </th>
                             <th>
                                 <input style="display: table-cell; width: 100%;" @bind="saveModel.Topic"/>
@@ -34,7 +38,7 @@
                         </tr>
                         <tr style="border: 1px solid;">
                             <th>
-                                <p style="display: table-cell">Grade: </p>
+                                <p style="display: table-cell">@Loc["Grade"]: </p>
                             </th>
                             <th>
                                 <input style="display: table-cell; width: 100%;" @bind="saveModel.Grade"/>
@@ -42,7 +46,7 @@
                         </tr>
                         <tr style="border: 1px solid;">
                             <th>
-                                <p style="display: table-cell">Level of complexity: </p>
+                                <p style="display: table-cell">@Loc["Complexity"]: </p>
                             </th>
                             <th>
                                 <select  style="display: table-cell; width: 100%;" @bind="compl">
@@ -58,7 +62,7 @@
                         </tr>
                         <tr style="border: 1px solid;">
                             <th>
-                                <p style="display: table-cell">Randomise: </p>
+                                <p style="display: table-cell">@Loc["Randomise"]: </p>
                             </th>
                             <th>
                                 <input type="checkbox" @bind="saveModel.Randomise"/>
@@ -66,7 +70,7 @@
                         </tr>
                         <tr style="border: 1px solid;">
                             <th>
-                                <p style="display: table-cell">Enable Timer: </p>
+                                <p style="display: table-cell">@Loc["Timer"]: </p>
                             </th>
                             <th>
                                 <input type="checkbox" @bind="saveModel.EnableTimer"/>
@@ -76,7 +80,7 @@
                         {
                             <tr style="border: 1px solid;">
                             <th>
-                                <p style="display: table-cell">Timer duration: </p>
+                                <p style="display: table-cell">@Loc["Duration"]: </p>
                             </th>
                             <th>
                                 <input style="width: 100%;" type="number" @bind="saveModel.TimerDuration"/>
@@ -85,7 +89,7 @@
                         }
                         <tr style="border: 1px solid;">
                             <th>
-                                <p style="display: table-cell">Limit attempts: </p>
+                                <p style="display: table-cell">@Loc["Attempts"]: </p>
                             </th>
                             <th>
                                 <input type="checkbox" @bind="saveModel.LimitAttempts"/>
@@ -95,7 +99,7 @@
                         {
                             <tr style="border: 1px solid;">
                             <th>
-                                <p style="display: table-cell">Maximum attempts: </p>
+                                <p style="display: table-cell">@Loc["Maximum attempts"]: </p>
                             </th>
                             <th>
                                 <input style="width: 100%;" type="number" @bind="saveModel.MaxAttempts"/>
@@ -106,8 +110,8 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button @onclick="OnNo">No</button>
-                <button @onclick="OnYes">Yes</button>
+                <button @onclick="OnNo">@Loc["No"]</button>
+                <button @onclick="OnYes">@Loc["Yes"]</button>
             </div>
         </div>
     </div>

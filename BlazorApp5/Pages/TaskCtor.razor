@@ -7,75 +7,82 @@
 
 @inject DBContext DbContext
 
+@using System.Globalization
+
+@inject IStringLocalizer<Shared.ResourceFiles.TaskCtorPage> Loc
+
 
 <div class="instrument_panel">
     <button class="button" @onclick="OnPlusClick">
         <div class="button-div">
             <img class="button-content" src="/plus.png"/>
-            <p class="button-content">Add</p>
+            <p class="button-content">@Loc["Add"]</p>
         </div>
     </button>
     <button class="button" @onclick="OnMinusClick">
         <div class="button-div">
             <img class="button-content" src="/minus.png"/>
-            <p class="button-content">Undo</p>
+            <p class="button-content">@Loc["Undo"]</p>
         </div>
     </button>
     <button class="button" @onclick="OnOkClick">
         <div class="button-div">
             <img class="button-content" src="/ok.png"/>
-            <p class="button-content">Save</p>
+            <p class="button-content">@Loc["Save"]</p>
         </div>
     </button>
     <button class="button" @onclick="OnCancelClick">
         <div class="button-div">
             <img class="button-content" src="/cancel.png"/>
-            <p class="button-content">Discard</p>
+            <p class="button-content">@Loc["Discard"]</p>
         </div>
     </button>
     <button class="button" @onclick="OnEditClick">
         <div class="button-div">
             <img class="button-content" src="/editQuestions.png"/>
-            <p class="button-content">Edit Questions</p>
+            <p class="button-content">@Loc["Edit"]</p>
         </div>
     </button>
 
     <select class="color_pick" @bind="curent_rect_color">
-        <option value="Black">&#11035;Black</option>
-        <option value="Red">&#128997;Red</option>
-        <option value="Green">&#129001;Green</option>
-        <option value="Blue">&#128998;Blue</option>
-        <option value="Yellow">&#129000;Yellow</option>
-        <option value="White">&#11036;White</option>
-        <option value="Orange">&#128999;Orange</option>
-        <option value="Purple">&#129002;Purple</option>
+        <option value="Black">&#11035;@Loc["Black"]</option>
+        <option value="Red">&#128997;@Loc["Red"]</option>
+        <option value="Green">&#129001;@Loc["Green"]</option>
+        <option value="Blue">&#128998;@Loc["Blue"]</option>
+        <option value="Yellow">&#129000;@Loc["Yellow"]</option>
+        <option value="White">&#11036;@Loc["White"]</option>
+        <option value="Orange">&#128999;@Loc["Orange"]</option>
+        <option value="Purple">&#129002;@Loc["Purple"]</option>
     </select>
 </div>
 
 <div @onmouseup="OnMouseUp" @onmousedown="OnMouseDown">
     <BECanvas Width="1100" Height="700" @ref="canvas"/>
 </div>
-<BlazorInputFile.InputFile OnChange="OnChange" />
+<div>
+    <label class="upload-file" for="fileInput">@Loc["Upload"]</label>
+    <BlazorInputFile.InputFile id="fileInput" OnChange="OnChange" hidden/>
+</div>
 
 <img hidden src="@imageDataUri" @ref="img"/>
 
 @if (onCancelConfirm)
 {
-    <ModalPageConfirm Title="Discard all you've done" Text="Are you sure, you want to delete all the data you have made?" OnYes="@OnCancelYes" OnNo="@OnCancelNo"/>
+    <ModalPageConfirm Title="@Loc["DiscardTitle"]" Text="@Loc["DiscardText"]" OnYes="@OnCancelYes" OnNo="@OnCancelNo"/>
 }
 
 @if (onMinusConfirm)
 {
-    <ModalPageConfirm Title="Undo last question" Text="Are you sure, you want to delete last selected rectangle?" OnYes="@OnMinusYes" OnNo="@OnMinusNo"/>
+    <ModalPageConfirm Title="@Loc["UndoTitle"]" Text="@Loc["UndoText"]" OnYes="@OnMinusYes" OnNo="@OnMinusNo"/>
 }
 
 @if (onSave)
 {
-    <ModalPageSave saveModel="@saveModel" OnNo="@OnSaveNo" OnYes="@OnSaveYes" Title="Save your exercise" Text="If you finish creating tasks, complete form below to set all the properties and post your work."/>
+    <ModalPageSave saveModel="@saveModel" OnNo="@OnSaveNo" OnYes="@OnSaveYes" Title="@Loc["SaveTitle"]" Text="@Loc["SaveText"]"/>
 }
 @if (questionDialog)
 {
-    <AddQuestionModalPage Question="@questions" OnOk="@OnQuestionOk" Title="Set question for the area you've chosen" Text="Input in box bellow your question for chosen area"/>
+    <AddQuestionModalPage Question="@questions" OnOk="@OnQuestionOk" Title="@Loc["NewQuestionTitle"]" Text="@Loc["NewQuestionText"]"/>
 }
 @if (editpage)
 {

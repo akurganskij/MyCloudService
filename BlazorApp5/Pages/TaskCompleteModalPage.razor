@@ -1,4 +1,8 @@
-﻿<div class="modal fade show" id="myModal" style="display:block; background-color: rgba(10,10,10,.8);" aria-modal="true" role="dialog">
+﻿@using System.Globalization
+
+@inject IStringLocalizer<Shared.ResourceFiles.TaskCompleteModalPageRes> Loc
+
+<div class="modal fade show" id="myModal" style="display:block; background-color: rgba(10,10,10,.8);" aria-modal="true" role="dialog">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -6,11 +10,11 @@
             </div>
             <div class="modal-body">
                 <p>@Text</p>
-                <p>You have answered correctly @correct of @total</p>
+                <p>@Loc["Answ", correct.ToString(), total.ToString()]</p>
             </div>
             <div class="modal-footer">
                 <a href="/">
-                    <button>Ok</button>
+                    <button>@Loc["Ok"]</button>
                 </a>
             </div>
         </div>

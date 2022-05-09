@@ -21,5 +21,6 @@
         public bool LimitAttempts { get; set; }
 
         public int MaxAttempts { get; set; }
+
     }
 }

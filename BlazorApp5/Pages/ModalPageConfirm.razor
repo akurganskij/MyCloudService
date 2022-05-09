@@ -1,4 +1,8 @@
-﻿<div class="modal fade show" id="myModal" style="display:block; background-color: rgba(10,10,10,.8);" aria-modal="true" role="dialog">
+﻿@using System.Globalization
+
+@inject IStringLocalizer<Shared.ResourceFiles.ModalPageConfirmRes> Loc
+
+<div class="modal fade show" id="myModal" style="display:block; background-color: rgba(10,10,10,.8);" aria-modal="true" role="dialog">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -8,8 +12,8 @@
                 <p>@Text</p>
             </div>
             <div class="modal-footer">
-                <button @onclick="OnNo">No</button>
-                <button @onclick="OnYes">Yes</button>
+                <button @onclick="OnNo">@Loc["No"]</button>
+                <button @onclick="OnYes">@Loc["Yes"]</button>
             </div>
         </div>
     </div>

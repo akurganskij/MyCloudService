@@ -1,6 +1,9 @@
 ﻿@page "/task/{ProblemId:int}"
 @inject DBContext DbContext
 @inject NavigationManager Nav
+@using System.Globalization
+
+@inject IStringLocalizer<Shared.ResourceFiles.TaskForImPage> Loc
 
 @if (problems.EnableTimer)
 {
@@ -12,7 +15,7 @@
 }
 @if (correct || (timeOver && problems.EnableTimer) || clickOver)
 {
-    <button @onclick="OnNextClick">Next question</button>
+    <button @onclick="OnNextClick">@Loc["NextBtn"]</button>
 }
 
 @if (showQuestion)
@@ -27,7 +30,7 @@
 
 @if (complete)
 {
-    <TaskCompleteModalPage total="@tasks.Count" correct="correctAmount" Title="Congratulations!" Text="You've finished this task!"/>
+    <TaskCompleteModalPage total="@tasks.Count" correct="correctAmount" Title="@Loc["Congrats"]" Text="@Loc["CongratsText"]"/>
 }
 @code {
     [Parameter]
