@@ -12,6 +12,10 @@
 
 .thes{
     border: 1px solid;
+    background-color: darkblue;
+    color: aliceblue;
+    text-align: center;
+    padding: 1%;
 }
 
 .tds{

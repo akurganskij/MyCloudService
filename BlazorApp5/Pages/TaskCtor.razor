@@ -56,7 +56,7 @@
     </select>
 </div>
 
-<div @onmouseup="OnMouseUp" @onmousedown="OnMouseDown">
+<div @onmouseup="OnMouseUp" @onmousedown="OnMouseDown" @onmousemove="OnMouseMove">
     <BECanvas Width="1100" Height="700" @ref="canvas"/>
 </div>
 <div>
@@ -96,7 +96,7 @@
     private Data.Questions questions = new Data.Questions();
     private double startX, endX, startY, endY;
     private List<Rect> rects = new List<Rect>();
-    private bool changed = true, can_add = false, onCancelConfirm = false, onMinusConfirm = false, onSave = false, questionDialog = false, editpage = false;
+    private bool changedDraw = false, down = false, changed = true, can_add = false, onCancelConfirm = false, onMinusConfirm = false, onSave = false, questionDialog = false, editpage = false;
     private List<Tasks> tasks = new List<Tasks>();
     private Data.SaveModel saveModel = new Data.SaveModel();
 
@@ -171,8 +171,23 @@
             endY = e.OffsetY;
             rects.Add(new Rect() { x = startX, y = startY, width = endX - startX, height = endY - startY, color = curent_rect_color });
             can_add = false;
-
+            down = false;
             questionDialog = true;
+            changedDraw = true;
+        }
+    }
+    private async void OnMouseMove(MouseEventArgs e)
+    {
+        if(e.Button == 0 && down)
+        {
+            await context.ClearRectAsync(0, 0, 1100, 700);
+            await context.DrawImageAsync(img, 0, 0);
+            endX = e.OffsetX;
+            endY = e.OffsetY;
+            Rect rc = new Rect() { x = startX, y = startY, width = endX - startX, height = endY - startY, color = curent_rect_color };
+            await context.SetLineWidthAsync(2.0f);
+            await context.SetStrokeStyleAsync(rc.color);
+            await context.StrokeRectAsync(rc.x, rc.y, rc.width, rc.height);
         }
     }
     private void OnMouseDown(MouseEventArgs e)
@@ -181,6 +196,7 @@
         {
             startX = e.OffsetX;
             startY = e.OffsetY;
+            down = true;
         }
     }
     protected override async Task OnAfterRenderAsync(bool firstRender)
@@ -189,17 +205,22 @@
         {
             context = await canvas.CreateCanvas2DAsync();
         }
-        await context.ClearRectAsync(0, 0, 1100, 700);
-        await context.DrawImageAsync(img, 0, 0);
-        try{
-            foreach (Rect rc in rects)
+        if (changedDraw)
+        {
+            await context.ClearRectAsync(0, 0, 1100, 700);
+            await context.DrawImageAsync(img, 0, 0);
+            try
             {
-                await context.SetLineWidthAsync(2.0f);
-                await context.SetStrokeStyleAsync(rc.color);
-                await context.StrokeRectAsync(rc.x, rc.y, rc.width, rc.height);
+                foreach (Rect rc in rects)
+                {
+                    await context.SetLineWidthAsync(2.0f);
+                    await context.SetStrokeStyleAsync(rc.color);
+                    await context.StrokeRectAsync(rc.x, rc.y, rc.width, rc.height);
+                }
             }
+            catch (Exception ex) { }
+            changedDraw = false;
         }
-        catch(Exception ex){}
     }
 
     async Task OnChange(IFileListEntry[] files)
@@ -216,6 +237,7 @@
         }
         rects.Clear();
         changed = true;
+        changedDraw = true;
     }
 
     private void OnCancelYes()
@@ -231,6 +253,7 @@
     private void OnMinusYes()
     {
         onMinusConfirm = false;
+        changedDraw = true;
         OnMinusActions();
     }
     private void OnMinusNo()
@@ -263,6 +286,7 @@
                 question = questions.Question,
             };
         tasks.Add(ts);
+        changedDraw = true;
         questions.Question = String.Empty;
     }
     private void OnEditClick()
@@ -272,6 +296,7 @@
     private void OnEditYes()
     {
         editpage = false;
+        changedDraw = true;
     }
     private void OnEditNo()
     {

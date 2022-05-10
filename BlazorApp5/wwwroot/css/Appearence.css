@@ -1,5 +1,5 @@
 ﻿.upload-file{
-    background-color:aquamarine;
+    background-color:lightgray;
     border: 2px solid;
     border-color: darkblue;
     border-radius: 40px;
@@ -7,5 +7,35 @@
     color: navy;
 }
     .upload-file:hover{
-        color: white;
+        color: red;
+        transform: scale(1.02);
     }
+
+.next-question{
+    background-color: lightgoldenrodyellow;
+    border: 1px solid;
+    border-radius: 60px;
+    padding: 1%;
+    color: blueviolet;
+}
+    .next-question:hover{
+        background-color: azure;
+    }
+
+.quest-num{
+    float: right;
+    padding: 2%;
+    font-size: large;
+    background-color: lightgoldenrodyellow;
+    border: 2px dashed;
+    border-radius: 40px;
+}
+
+.countdown {
+    
+    padding: 2%;
+    font-size: large;
+    background-color: lightgoldenrodyellow;
+    border: 2px dotted;
+    border-radius: 40px;
+}

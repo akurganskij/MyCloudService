@@ -61,6 +61,15 @@ namespace BlazorApp5.Shared.ResourceFiles {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Create your own exercise.
+        /// </summary>
+        public static string Create {
+            get {
+                return ResourceManager.GetString("Create", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Look at existing excercises:.
         /// </summary>
         public static string Gallery {
@@ -75,6 +84,15 @@ namespace BlazorApp5.Shared.ResourceFiles {
         public static string Greeting {
             get {
                 return ResourceManager.GetString("Greeting", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на or.
+        /// </summary>
+        public static string Or {
+            get {
+                return ResourceManager.GetString("Or", resourceCulture);
             }
         }
     }

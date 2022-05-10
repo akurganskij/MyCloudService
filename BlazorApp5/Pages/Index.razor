@@ -6,7 +6,8 @@
 @inject IStringLocalizer<Shared.ResourceFiles.IndexPage> Loc
 
 <h1 style="text-align:center;">@Loc["Greeting"]</h1>
-
+<h2 style="text-align:center;"><a href="/constructor">@Loc["Create"]</a></h2>
+<h3 style="text-align:center;">@Loc["Or"]</h3>
 <h2 style="text-align:center;">@Loc["Gallery"]</h2>
 
 <ul class="task-cards">
@@ -14,11 +15,13 @@
 {
     @foreach (Problems pr in problem)
     {
-        <li @onclick=" () => NavigationManager.NavigateTo(NavigationManager.BaseUri + url + pr.Id)" style="background-image: url('@images.Find(p => p.Id == pr.ImageId).Description'); ">
+        <li style="background-image: url('@images.Find(p => p.Id == pr.ImageId).Description'); ">
+            <a href="/task/@pr.Id">
             <div class="task-info">
                 <span class="title">@pr.Name</span>
                 <span class="title">@pr.Subject</span>
             </div>
+            </a>
         </li>
     }
 }

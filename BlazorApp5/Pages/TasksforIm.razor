@@ -13,10 +13,24 @@
         </div>
     </div>
 }
-@if (correct || (timeOver && problems.EnableTimer) || clickOver)
-{
-    <button @onclick="OnNextClick">@Loc["NextBtn"]</button>
-}
+
+<table style="display: table; width:100%;">
+    <tr>
+        <td width="45%">
+    @if (correct || (timeOver && problems.EnableTimer) || clickOver)
+    {
+        <button class="next-question" @onclick="OnNextClick">@Loc["NextBtn"]</button>
+    }   
+    </td>
+    <td>
+    @if (problems.EnableTimer)
+    {
+        <label class="countdown">@timeLeft</label>
+    }
+    </td>
+<td width="35%"><label class="quest-num">@(tasknum+1) / @tasks.Count</label></td>
+</tr>
+</table>
 
 @if (showQuestion)
 {
@@ -36,7 +50,7 @@
     [Parameter]
     public int? ProblemId { get; set; }
 
-    private int tasknum = 0, correctAmount = 0, clicked = 0;
+    private int tasknum = 0, correctAmount = 0, clicked = 0, timeLeft = 0;
     private bool correct = false, complete = false, showQuestion = true, timeOver = false, clickOver = false;
 
     private Problems problems;
@@ -56,9 +70,11 @@
         {
             Shuffle();
         }
-        aTimer = new System.Timers.Timer(500);
+
+        aTimer = new System.Timers.Timer(1000);
         if (problems.EnableTimer)
-        {            
+        {
+            timeLeft = problems.TimerDuration;
             aTimer.Elapsed += OnTimerFinished;
             aTimer.Enabled = true;
         }
@@ -67,6 +83,7 @@
     {
         if (time < problems.TimerDuration)
         {
+            timeLeft--;
             time += 1;
             int i = 100 * time / problems.TimerDuration;
             styleTimer = $"width: {i}%; background-color: lightgreen; height: 18px;";
@@ -113,7 +130,8 @@
     private void OnNextClick()
     {
         if (tasknum < tasks.Count)
-        {            
+        {           
+            timeLeft = problems.TimerDuration;
             ++tasknum;
             correct = false;
             if (tasknum == tasks.Count) {
