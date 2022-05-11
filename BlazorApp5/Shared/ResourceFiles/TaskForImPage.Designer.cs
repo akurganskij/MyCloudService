@@ -79,11 +79,56 @@ namespace BlazorApp5.Shared.ResourceFiles {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Correct answer!.
+        /// </summary>
+        public static string Correct {
+            get {
+                return ResourceManager.GetString("Correct", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Next question.
         /// </summary>
         public static string NextBtn {
             get {
                 return ResourceManager.GetString("NextBtn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Skip question.
+        /// </summary>
+        public static string SkipBtn {
+            get {
+                return ResourceManager.GetString("SkipBtn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Press on the part of the picture, which is the answer..
+        /// </summary>
+        public static string UseText {
+            get {
+                return ResourceManager.GetString("UseText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на How to use..
+        /// </summary>
+        public static string UseTitle {
+            get {
+                return ResourceManager.GetString("UseTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Wrong answer!.
+        /// </summary>
+        public static string Wrong {
+            get {
+                return ResourceManager.GetString("Wrong", resourceCulture);
             }
         }
     }

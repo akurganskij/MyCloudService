@@ -43,7 +43,7 @@
             <p class="button-content">@Loc["Edit"]</p>
         </div>
     </button>
-
+    <label class="upload-file" for="fileInput">@Loc["Upload"]</label>
     <select class="color_pick" @bind="curent_rect_color">
         <option value="Black">&#11035;@Loc["Black"]</option>
         <option value="Red">&#128997;@Loc["Red"]</option>
@@ -60,7 +60,6 @@
     <BECanvas Width="1100" Height="700" @ref="canvas"/>
 </div>
 <div>
-    <label class="upload-file" for="fileInput">@Loc["Upload"]</label>
     <BlazorInputFile.InputFile id="fileInput" OnChange="OnChange" hidden/>
 </div>
 
@@ -104,6 +103,7 @@
     {
         if (rects.Count != 0) { 
             rects.RemoveAt(rects.Count - 1); 
+            tasks.RemoveAt(tasks.Count - 1);
         }
     }
     private void OnMinusClick()

@@ -5,6 +5,17 @@
 
 @inject IStringLocalizer<Shared.ResourceFiles.TaskForImPage> Loc
 
+@if (misclick) 
+{
+    <Flyouts style="background-color: red;" Title="@Loc["Wrong"]" />
+}
+else if(correct)
+{
+    <Flyouts style="background-color: green;" Title="@Loc["Correct"]" />
+}
+else{
+    <Flyouts style="background-color: yellow; color: black;" Title="@Loc["UseTitle"]" Text="@Loc["UseText"]"/>
+}
 @if (problems.EnableTimer)
 {
     <div style="width: 100%; height: 20px; background-color: lightgray;">
@@ -16,12 +27,16 @@
 
 <table style="display: table; width:100%;">
     <tr>
-        <td width="45%">
+        <td width="22%">      
+            <button class="next-question" @onclick="OnNextClick">@Loc["SkipBtn"]</button> 
+        </td>
+        <td width="22%">
     @if (correct || (timeOver && problems.EnableTimer) || clickOver)
     {
         <button class="next-question" @onclick="OnNextClick">@Loc["NextBtn"]</button>
     }   
     </td>
+        
     <td>
     @if (problems.EnableTimer)
     {
@@ -51,7 +66,7 @@
     public int? ProblemId { get; set; }
 
     private int tasknum = 0, correctAmount = 0, clicked = 0, timeLeft = 0;
-    private bool correct = false, complete = false, showQuestion = true, timeOver = false, clickOver = false;
+    private bool correct = false, complete = false, showQuestion = true, timeOver = false, clickOver = false, misclick = false;
 
     private Problems problems;
     private Image image;
@@ -102,30 +117,27 @@
         double x, y;
         x = e.OffsetX;
         y = e.OffsetY;
-        if(tasks[tasknum].x1 > tasks[tasknum].x2 && clicked <= problems.MaxAttempts)
+        if((clicked <= problems.MaxAttempts || !problems.LimitAttempts))
         {
-            if (x > tasks[tasknum].x2 && x < tasks[tasknum].x1) {
+            if (x > Math.Min(tasks[tasknum].x2, tasks[tasknum].x1) && x < Math.Max(tasks[tasknum].x2, tasks[tasknum].x1) &&
+                y < Math.Max(tasks[tasknum].y1, tasks[tasknum].y2) && y > Math.Min(tasks[tasknum].y1, tasks[tasknum].y2)) {
                 correct = true;
                 aTimer.Enabled = false;
                 time = 0;
                 styleTimer = "width: 0%; background-color: lightgreen; height: 18px;";
             }
         }
-        else
-        {
-            if (x < tasks[tasknum].x2 && x > tasks[tasknum].x1) {
-                correct = true;
-                aTimer.Enabled = false;
-                time = 0;
-                styleTimer = "width: 0%; background-color: lightgreen; height: 18px;";
-            }
-        }
-        if(clicked > problems.MaxAttempts)
+        if(clicked > problems.MaxAttempts && problems.LimitAttempts)
         {
             styleTimer = "width: 0%; background-color: lightgreen; height: 18px;";
             clickOver = true;
         }
         if (correct && (!timeOver || !problems.EnableTimer)) correctAmount++;
+        if (!correct) misclick = true;
+        else
+        {
+            misclick = false;
+        }
     }
     private void OnNextClick()
     {
@@ -136,7 +148,7 @@
             correct = false;
             if (tasknum == tasks.Count) {
                 showQuestion = false;
-                tasknum = 0;
+                --tasknum;
                 complete = true;
             }
             timeOver = false;
@@ -144,6 +156,7 @@
             aTimer.Enabled = true;
             clicked = 0;
             clickOver = false;
+            misclick = false;
         }
     }
 

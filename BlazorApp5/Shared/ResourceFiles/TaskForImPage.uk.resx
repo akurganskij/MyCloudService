@@ -123,7 +123,22 @@
   <data name="CongratsText" xml:space="preserve">
     <value>Ви виконали цю тренувальну вправу!</value>
   </data>
+  <data name="Correct" xml:space="preserve">
+    <value>Правильна відповідь!</value>
+  </data>
   <data name="NextBtn" xml:space="preserve">
     <value>Наступне питання</value>
+  </data>
+  <data name="SkipBtn" xml:space="preserve">
+    <value>Пропустити питання</value>
+  </data>
+  <data name="UseText" xml:space="preserve">
+    <value>Натисніть на частину зображення, яка є відповіддю.</value>
+  </data>
+  <data name="UseTitle" xml:space="preserve">
+    <value>Як користуватись.</value>
+  </data>
+  <data name="Wrong" xml:space="preserve">
+    <value>Неправильна відповідь!</value>
   </data>
 </root>
