@@ -1,6 +1,6 @@
 ﻿@page "/"
 @inject NavigationManager NavigationManager
-@inject DBContext DbContext
+@inject HttpClient HttpClient
 @using System.Globalization
 
 @inject IStringLocalizer<Shared.ResourceFiles.IndexPage> Loc
@@ -34,15 +34,14 @@
 
     private bool onHoover = false;
     private string text, url = "/task/";
-    private List<Problems> problem;
+    private List<Problems> problem = new();
     private List<Image> images;
 
-    protected override void OnInitialized()
+    protected override async Task OnInitializedAsync()
     {
        
-        problem = DbContext.problems.ToList();
-        images = DbContext.images.ToList();
-        base.OnInitialized();
+        problem = await HttpClient.GetFromJsonAsync<List<Problems>>(NavigationManager.BaseUri + "api/problems");
+        images = await HttpClient.GetFromJsonAsync<List<Image>>(NavigationManager.BaseUri + "api/images");
     }
 
 

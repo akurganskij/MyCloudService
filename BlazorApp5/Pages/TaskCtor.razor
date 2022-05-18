@@ -10,7 +10,16 @@
 @using System.Globalization
 
 @inject IStringLocalizer<Shared.ResourceFiles.TaskCtorPage> Loc
+@inject HttpClient HttpClient
+@inject NavigationManager NavigationManager
 
+@if(done)
+{
+    <Flyouts style="background-color: green;" Title="Loc" />
+}
+else{
+    <Flyouts style="background-color: yellow; color: black;" Title="Loc" Text="Loc"/>
+}
 
 <div class="instrument_panel">
     <button class="button" @onclick="OnPlusClick">
@@ -95,7 +104,7 @@
     private Data.Questions questions = new Data.Questions();
     private double startX, endX, startY, endY;
     private List<Rect> rects = new List<Rect>();
-    private bool changedDraw = false, down = false, changed = true, can_add = false, onCancelConfirm = false, onMinusConfirm = false, onSave = false, questionDialog = false, editpage = false;
+    private bool done = false, changedDraw = false, down = false, changed = true, can_add = false, onCancelConfirm = false, onMinusConfirm = false, onSave = false, questionDialog = false, editpage = false;
     private List<Tasks> tasks = new List<Tasks>();
     private Data.SaveModel saveModel = new Data.SaveModel();
 
@@ -114,10 +123,13 @@
     {
         can_add = true;
     }
-    private void OnOkActions()
+    private async void OnOkActions()
     {
-        int idIm = DbContext.images.Count();
-        int probId = DbContext.problems.Count();
+        int probId = 0, idIm = 0;
+        var p = await HttpClient.GetFromJsonAsync<List<Problems>>(NavigationManager.BaseUri + $"api/problems");
+        if (p is not null) probId = p.Count;
+        var i = await HttpClient.GetFromJsonAsync<List<Image>>(NavigationManager.BaseUri + $"api/images");
+        if (i is not null) idIm = i.Count;
         Image im = new Image()
             {
                 Id = idIm + 1,
@@ -139,11 +151,11 @@
                 MaxAttempts = saveModel.MaxAttempts,
                 ImageId = im.Id,
             };
-        DbContext.problems.Add(problems);
-        DbContext.images.Add(im);
+        await HttpClient.PostAsJsonAsync<Problems>(NavigationManager.BaseUri + "api/problems", problems);
+        await HttpClient.PostAsJsonAsync<Image>(NavigationManager.BaseUri + "api/images", im);
         foreach (Tasks task in tasks) task.ImageId = im.Id;
-        DbContext.tasks.AddRange(tasks);
-        DbContext.SaveChanges();
+        await HttpClient.PostAsJsonAsync<List<Tasks>>(NavigationManager.BaseUri + "api/tasks", tasks);
+        done = true;
 
     }
     private void OnOkClick()

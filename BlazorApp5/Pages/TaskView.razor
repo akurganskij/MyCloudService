@@ -2,7 +2,7 @@
 @using System.Linq
 @inject HttpClient HttpClient
 @inject NavigationManager NavigationManager
-@inject DBContext DbContext
+
 @using System.Globalization
 
 @inject IStringLocalizer<Shared.ResourceFiles.TaskViewPage> Loc
@@ -27,7 +27,7 @@
             <td class="tds"><input style="width: 100%;" @oninput="x => complexity = x.Value.ToString()"/></td>
             <td class="tds"><input style="width: 100%;" @oninput="x => timer = x.Value.ToString()" /></td>
         </tr>
-    @if(problems.Count != 0)
+    @if ( problems.Count != 0)
     @foreach(Problems pr in problems.Where( t => check(t) == true).OrderBy(o => prop(o)))
     {
         <tr class="trs">
@@ -48,12 +48,12 @@
     private string name = String.Empty, subject = String.Empty, topic = String.Empty, grade = String.Empty, id = String.Empty, complexity = String.Empty;
     private string timer = String.Empty;
 
-    private List<Problems> problems;
+    private List<Problems> problems = new();
 
-    protected override void OnInitialized()
+    protected override async Task OnInitializedAsync()
     {
-        problems = DbContext.problems.ToList();
-        base.OnInitialized();
+        problems = await HttpClient.GetFromJsonAsync<List<Problems>>(NavigationManager.BaseUri + "api/problems");
+
     }
 
     private bool check(Problems p)
