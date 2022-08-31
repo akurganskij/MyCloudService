@@ -24,3 +24,6 @@ jobs:
       run: dotnet publish BlazorGitHubPagesDemo.csproj -c Release --output release --nologo
     - name: Deploy to GitHub Pages
       uses: JamesIves/github-pages-deploy-action@v4.4.0
+      with:
+        branch: gh-pages
+        folder: release/wwwroot
