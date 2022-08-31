@@ -35,9 +35,9 @@ jobs:
     - name: Add .nojekyll file
       run: touch BlazorApp5/wwwroot/.nojekyll
       
-    - name: Commit wwwroot to GitHub Pages
-      uses: JamesIves/github-pages-deploy-action@3.7.1
-      with:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        BRANCH: gh-pages
-        FOLDER: BlazorApp5/wwwroot
+  #  - name: Commit wwwroot to GitHub Pages
+  #    uses: JamesIves/github-pages-deploy-action@3.7.1
+  #    with:
+   #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+   #     BRANCH: gh-pages
+   #     FOLDER: BlazorApp5/wwwroot
