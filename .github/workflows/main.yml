@@ -24,8 +24,8 @@ jobs:
       run: dotnet publish BlazorApp5/BlazorApp5.csproj -c Release -o release --nologo
     
     # changes the base-tag in index.html from '/' to 'BlazorGitHubPagesDemo' to match GitHub Pages repository subdirectory
-    - name: Change base-tag in index.html from / to MyCloudService
-      run: sed -i '/<base href="\/" \/>/<base href="\/MyCloudService\/" \/>/g' BlazorApp5/Shared/MainLayout.razor
+    #- name: Change base-tag in index.html from / to MyCloudService
+     # run: sed -i 's/<base href="\/" \/>/<base href="\/MyCloudService\/" \/>/g' BlazorApp5/Shared/MainLayout.razor
     
     # copy index.html to 404.html to serve the same file when a file is not found
     - name: copy index.html to 404.html
@@ -40,4 +40,4 @@ jobs:
       with:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         BRANCH: gh-pages
-        FOLDER: BlazorApp5/wwwroot
+        FOLDER: BlazorApp5/Shared
