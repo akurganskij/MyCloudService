@@ -19,6 +19,7 @@ builder.Services.AddScoped<ITaskRepository, TaskRepository>();
 builder.Services.AddHttpClient();
 builder.Services.AddSqlite<DBContext>("Data Source=image.db");
 
+
 builder.Services.AddLocalization();
 
 builder.Services.AddControllers();
